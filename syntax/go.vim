@@ -2,12 +2,11 @@ if exists("b:current_syntax")
   finish
 endif
 
-syn sync minlines=500
 syn case match
 
+" Package statement
 syn keyword     goPackage              package
-hi def link     goPackage              Statement
-
+hi def link     goPackage              PreProc
 
 " Keywords within functions
 syn keyword     goStatement            defer go goto return break continue fallthrough
@@ -39,9 +38,13 @@ syn keyword     goBuiltins             make new panic print println real recover
 syn keyword     goBoolean              true false
 syn keyword     goIdentifiers          nil iota
 
-hi def link     goBuiltins             Identifier
+hi def link     goBuiltins             Function
 hi def link     goBoolean              Boolean
-hi def link     goIdentifiers          goBoolean
+hi def link     goIdentifiers          Identifier
+
+" Customary names
+syn keyword     goError                err
+hi def link     goError                Special
 
 " Comments; their contents
 syn keyword     goTodo                 contained TODO FIXME XXX BUG NOTE
@@ -89,17 +92,17 @@ syn region      goBlock                start="{" end="}" transparent
 " import
 syn region      goImport               start='import (' end=')' transparent contains=goImport,goString,goComment
 syn keyword     goImport               import    contained
-hi def link     goImport               Statement
+hi def link     goImport               Include
 
 " var
 syn keyword     goVar                  var       contained
 syn region      goVar                  start='var ('   end='^\s*)$' transparent contains=ALLBUT,goParen,goBlock
-hi def link     goVar                  Keyword
+hi def link     goVar                  Structure
 
 " const
 syn keyword     goConst                const     contained
 syn region      goConst                start='const (' end='^\s*)$' transparent contains=ALLBUT,goParen,goBlock
-hi def link     goConst                Keyword
+hi def link     goConst                Structure
 
 " Single-line var, const, and import.
 syn match       goSingleDecl           /\%(import\|var\|const\) [^(]\@=/ contains=goImport,goVar,goConst
@@ -141,12 +144,15 @@ hi def link     goImaginaryFloat       Float
 
 syn match       goVarArgs              /\.\.\./
 
-syn keyword     goDeclaration          func type
-hi def link     goDeclaration          Keyword
+syn keyword     goTypedef              type
+hi def link     goTypedef              Typedef
+
+syn keyword     goFuncdef              func
+hi def link     goFuncdef              Keyword
 
 syn keyword     goDeclType             struct interface
-hi def link     goDeclType             Keyword
+hi def link     goDeclType             Structure
 
 let b:current_syntax = "go"
 
-" vim: sw=2 ts=2 et colorcolumn=17,40
+" vim: shiftwidth=2 tabstop=2 expandtab colorcolumn=17,40

@@ -75,4 +75,4 @@ hi def link     goTplComment           Comment
 
 let b:current_syntax = "gotexttmpl"
 
-" vim: sw=2 ts=2 et colorcolumn=17,40
+" vim: shiftwidth=2 tabstop=2 expandtab colorcolumn=17,40
