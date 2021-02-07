@@ -4,7 +4,9 @@ set cpo&vim
 autocmd BufRead,BufNewFile *.go     setfiletype go
 autocmd BufRead,BufNewFile *.gohtml setfiletype gohtmltmpl
 autocmd BufRead,BufNewFile *.gotxt  setfiletype gotexttmpl
+autocmd! BufRead,BufNewFile *.sum
 autocmd BufRead,BufNewFile go.sum   call s:gosum()
+autocmd! BufRead,BufNewFile *.mod
 autocmd BufRead,BufNewFile go.mod   call s:gomod()
 
 function! s:gomod()
@@ -14,7 +16,7 @@ function! s:gomod()
       continue
     endif
     if l:l =~# '^module .\+'
-      setlocal filetype=gomod
+      setfiletype gomod
     endif
     break
   endfor
@@ -29,7 +31,7 @@ function! s:gosum()
       return
     endif
   endfor
-  setlocal filetype=gosum
+  setfiletype gosum
 endfunction
 
 let &cpo = s:cpo_save
