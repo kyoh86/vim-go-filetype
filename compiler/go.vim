@@ -29,5 +29,5 @@ CompilerSet errorformat+=%A%\\%%(%[%^:]%\\+:\ %\\)%\\?%f:%l:\ %m    " Start of m
 CompilerSet errorformat+=%C%*\\s%m                                  " Continuation of multiline error message is indented
 CompilerSet errorformat+=%-G%.%#                                    " All lines not matching any of the above patterns are ignored
 
-let &cpo = s:save_cpo
-unlet s:save_cpo
+let &cpo = s:cpo_save
+unlet s:cpo_save
