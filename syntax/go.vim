@@ -49,11 +49,17 @@ hi def link     goError                Special
 " Comments; their contents
 syn keyword     goTodo                 contained TODO FIXME XXX BUG NOTE
 syn cluster     goCommentGroup         contains=goTodo
-syn region      goComment              start="//" end="$" contains=@goCommentGroup,@Spell
+syn region      goComment              start="//" end="$" contains=goGenerate,@goCommentGroup,@Spell
 syn region      goComment              start="/\*" end="\*/" contains=@goCommentGroup,@Spell
 
 hi def link     goComment              Comment
 hi def link     goTodo                 Todo
+
+" Go generate tags
+syn match       goGenerateVariables    contained /\%(\$GOARCH\|\$GOOS\|\$GOFILE\|\$GOLINE\|\$GOPACKAGE\|\$DOLLAR\)\>/
+syn region      goGenerate             start="^\s*//go:generate" end="$" contains=goGenerateVariables
+hi def link     goGenerate             PreProc
+hi def link     goGenerateVariables    Special
 
 " Go escapes
 syn match       goEscapeOctal          display contained "\\[0-7]\{3}"
@@ -90,7 +96,7 @@ syn region      goParen                start='(' end=')' transparent
 syn region      goBlock                start="{" end="}" transparent
 
 " import
-syn region      goImport               start='import (' end=')' transparent contains=goImport,goString,goComment
+syn region      goImport               start='import (' end=')' transparent contains=goImport,goString,goComment fold
 syn keyword     goImport               import    contained
 hi def link     goImport               Include
 
