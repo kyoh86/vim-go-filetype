@@ -161,4 +161,6 @@ hi def link     goDeclType             Structure
 
 let b:current_syntax = "go"
 
+syn sync minlines=1000
+
 " vim: shiftwidth=2 tabstop=2 expandtab colorcolumn=17,40
