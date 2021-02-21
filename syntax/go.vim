@@ -96,9 +96,9 @@ syn region      goParen                start='(' end=')' transparent
 syn region      goBlock                start="{" end="}" transparent
 
 " import
-syn region      goImport               start='import (' end=')' transparent contains=goImport,goString,goComment fold
 syn keyword     goImport               import    contained
 hi def link     goImport               Include
+syn region      goImport               start='import (' end=')' transparent fold contains=goImport,goString,goComment
 
 " var
 syn keyword     goVar                  var       contained
