@@ -98,7 +98,7 @@ syn region      goBlock                start="{" end="}" transparent
 " import
 syn keyword     goImport               import    contained
 hi def link     goImport               Include
-syn region      goImport               start='import (' end=')' transparent fold contains=goImport,goString,goComment
+syn region      goImportBlock          start='import (' end=')' transparent fold contains=goImport,goString,goComment
 
 " var
 syn keyword     goVar                  var       contained
@@ -160,7 +160,5 @@ syn keyword     goDeclType             struct interface
 hi def link     goDeclType             Structure
 
 let b:current_syntax = "go"
-
-syn sync minlines=1000
 
 " vim: shiftwidth=2 tabstop=2 expandtab colorcolumn=17,40
