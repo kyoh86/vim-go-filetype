@@ -61,6 +61,26 @@ syn region      goGenerate             start="^\s*//go:generate" end="$" contain
 hi def link     goGenerate             PreProc
 hi def link     goGenerateVariables    Special
 
+syn match       goBuild                display contained "+build"
+" Highlight the known values of GOOS, GOARCH, and other +build options.
+syn keyword     goBuildDirectives      contained
+                                     \ android darwin dragonfly freebsd linux nacl netbsd openbsd plan9
+                                     \ solaris windows 386 amd64 amd64p32 arm armbe arm64 arm64be ppc64
+                                     \ ppc64le mips mipsle mips64 mips64le mips64p32 mips64p32le ppc
+                                     \ s390 s390x sparc sparc64 cgo ignore race
+
+" Other words in the build directive are build tags not listed above, so
+" avoid highlighting them as comments by using a matchgroup just for the
+" start of the comment.
+" The rs=s+2 option lets the \s*+build portion be part of the inner region
+" instead of the matchgroup so it will be highlighted as a goBuild.
+syn region      goBuildComment         matchgroup=goBuildCommentStart
+                                     \ start="//\s*+build\s"rs=s+2 end="$"
+                                     \ contains=goBuild,goBuildDirectives
+hi def link     goBuildCommentStart    Comment
+hi def link     goBuildDirectives      Type
+hi def link     goBuild                PreProc
+
 " Go escapes
 syn match       goEscapeOctal          display contained "\\[0-7]\{3}"
 syn match       goEscapeC              display contained +\\[abfnrtv\\'"]+
@@ -102,13 +122,13 @@ syn region      goImportBlock          start='import (' end=')' transparent fold
 
 " var
 syn keyword     goVar                  var       contained
-syn region      goVar                  start='var ('   end='^\s*)$' transparent contains=ALLBUT,goParen,goBlock
 hi def link     goVar                  Structure
+syn region      goVarBlock             start='var ('   end='^\s*)$' transparent contains=ALLBUT,goParen,goBlock
 
 " const
 syn keyword     goConst                const     contained
-syn region      goConst                start='const (' end='^\s*)$' transparent contains=ALLBUT,goParen,goBlock
 hi def link     goConst                Structure
+syn region      goConstBlock           start='const (' end='^\s*)$' transparent contains=ALLBUT,goParen,goBlock
 
 " Single-line var, const, and import.
 syn match       goSingleDecl           /\%(import\|var\|const\) [^(]\@=/ contains=goImport,goVar,goConst
@@ -158,6 +178,8 @@ hi def link     goFuncdef              Keyword
 
 syn keyword     goDeclType             struct interface
 hi def link     goDeclType             Structure
+
+syn sync fromstart
 
 let b:current_syntax = "go"
 
